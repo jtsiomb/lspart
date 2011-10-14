@@ -200,18 +200,20 @@ static int read_sector(void *buf, uint32_t sector)
 	return 0;
 }
 
-const char *printsz(unsigned int sz)
+const char *printsz(unsigned int sz_sect)
 {
 	int i = 0;
 	const char *suffix[] = { "kb", "mb", "gb", "tb", "pb", 0 };
 	static char buf[512];
 
-	while(sz > 1024 && suffix[i + 1]) {
-		sz /= 1024;
+	float sz = (float)sz_sect / 2.0;
+
+	while(sz > 1024.0 && suffix[i + 1]) {
+		sz /= 1024.0;
 		i++;
 	}
 
-	sprintf(buf, "%u %s", sz, suffix[i]);
+	sprintf(buf, "%.1f %s", sz, suffix[i]);
 	return buf;
 }
 
